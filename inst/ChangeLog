@@ -1,0 +1,74 @@
+2010-09-14  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Version 0.2.2
+
+2010-09-13  Dirk Eddelbuettel  <edd@debian.org>
+
+	* R/*R: Remove magma tests code for now
+	* man.*Rd: Updated documentation
+	* inst/doc/gcbd.Rnw: Updated accordingly
+
+2010-09-12  Dirk Eddelbuettel  <edd@debian.org>
+
+	* NAMESPACE: Added, at last
+
+2010-09-11  Dirk Eddelbuettel  <edd@debian.org>
+
+	* R/figures.R: Place code to for vignette figures here
+	* man/figures.Rd: Documentation for the above
+
+2010-09-03  Dirk Eddelbuettel  <edd@debian.org>
+
+	* R/analysis.R: Analysis of log/log plot
+
+	* DESCRIPTION: Version 0.2.1
+	* DESCRIPTION: Added Depends: on plyr, reshape and lattice
+
+2010-09-02  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Increased to 'Version 0.2.0'
+
+	* inst/sql/gcbd.sqlite: Results from 'run 2'
+
+2010-09-01  Dirk Eddelbuettel  <edd@debian.org>
+
+        * inst/scripts/benchmark.r: Added atl39 calls
+
+        * R/utilities.R: Added Atlas 3.9.* support
+        * R/benchmark.R: Added qr() uses LAPACK=TRUE
+
+2010-08-29  Dirk Eddelbuettel  <edd@debian.org>
+
+	* R/utilities.R: Use Henrik's isInstalled()
+
+2010-08-23  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/scripts/runMe.sh: Helper script added
+	* inst/scripts/summarizeDB.r: Idem
+
+2010-08-21  Dirk Eddelbuettel  <edd@debian.org>
+
+        * R/benchmark.R: Added LU benchmarks
+
+2010-08-20  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/doc/gcbd.bib: Starting to fill a bin file
+
+2010-08-17  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/scripts/benchmark.r: Now single frontend script
+
+	* R/utilities.R: Added hasGputools() and hasMagma()
+        * R/benchmark.R: New name matmultBenchmark()
+
+2010-08-15  Dirk Eddelbuettel  <edd@debian.org>
+
+	* R/benchmark.R: Added svdBenchmark and GPU variant
+	* man/benchmark.Rd: Added documentation
+
+	* inst/doc/vignette.Rnw: beginnings of a vignette
+
+	* inst/sql/: renamed from inst/data
+
+	* DESCRIPTION: Release 0.1.0 and initial committ
+
