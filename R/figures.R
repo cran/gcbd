@@ -142,7 +142,7 @@ figure_LogLogSlopes <- function() {
                            levels=c("matmult", "qr", "svd", "lu"))
 
     sb <- trellis.par.get("strip.background")
-    sb[["col"]][1] <- "lightgray"
+    sb[["col"]][1:2] <- c("gray80","gray90")
     trellis.par.set("strip.background", sb)
 
     ss <- trellis.par.get("superpose.symbol")
@@ -168,7 +168,7 @@ figure_LogLogIntercept <- function() {
                            levels=c("matmult", "qr", "svd", "lu"))
 
     sb <- trellis.par.get("strip.background")
-    sb[["col"]][1] <- "lightgray"
+    sb[["col"]][1:2] <- c("gray80","gray90")
     trellis.par.set("strip.background", sb)
 
     ss <- trellis.par.get("superpose.symbol")
@@ -196,15 +196,32 @@ figure_LogLogLattice <- function() {
     DM[,"host"] <- ordered(DM[,"host"], levels=c("i7_920", "xeon_X5570"))
     levels(DM[,"host"]) <- c("i7", "xeon")
 
+    sb <- trellis.par.get("strip.background")
+    sb[["col"]][1:2] <- c("gray80","gray90")
+    trellis.par.set("strip.background", sb)
 
+    sl <- trellis.par.get("superpose.line")
+    sl[["col"]] <- .cols
+    trellis.par.set("superpose.line", sl)
+
+    op <- options(scipen=5)
     with(DM,print(xyplot(value ~ nobs| type+host,
                          group=variable, lwd=2,
-                         scales=list(x=list(log=TRUE),y=list(log=TRUE)),
+                         scales=list(x=list(log=TRUE,at=c(100,400,1500,5000),labels=c(100,400,1500,5000)),
+                                     y=list(log=TRUE,at=c(0.0001,0.01,1,100),labels=c(0.0001,0.01,1,100))),
                          panel=function(x,subscripts,groups,...) {
                              panel.superpose(x,subscripts,groups,type='l',...)
                          },
-                         key=simpleKey(text=c("ref","atlas","atl93","mkl","goto","gpu"),space="right", lines=TRUE, points=FALSE)
+                         key=simpleKey(text=c("ref","atlas","atl93","mkl","goto","gpu"),
+                                       space="right", lines=TRUE, points=FALSE),
+                         xlab="Matrix dimension (in logs)",
+                         ylab="Elapsed time in seconds (in logs)",
+                         main=paste("Benchmarking BLAS and GPU:",
+                                    "Comparing six implementations on four methods across two architectures"),
+                         sub=paste("Benchmark setup, code, data and analysis are available in the R package",
+                                   "gcbd (Eddelbuettel, 2010) via every CRAN mirror")
                          )))
+    options(op)
     invisible(NULL)
 }
 
