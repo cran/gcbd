@@ -184,7 +184,7 @@ figure_LogLogIntercept <- function() {
     invisible(NULL)
 }
 
-figure_LogLogLattice <- function() {
+figure_LogLogLattice <- function(titles=TRUE) {
     D <- rbind(getBenchmarkData("i7_920"),
                getBenchmarkData("xeon_X5570"))
 
@@ -214,12 +214,97 @@ figure_LogLogLattice <- function() {
                          },
                          key=simpleKey(text=c("ref","atlas","atl93","mkl","goto","gpu"),
                                        space="right", lines=TRUE, points=FALSE),
-                         xlab="Matrix dimension (in logs)",
-                         ylab="Elapsed time in seconds (in logs)",
-                         main=paste("Benchmarking BLAS and GPU:",
+                         xlab="Matrix dimension (on logarithmic axis)",
+                         ylab="Elapsed time in seconds (on logarithmic axis)",
+                         main=ifelse(titles,paste("Benchmarking BLAS and GPU:",
                                     "Comparing six implementations on four methods across two architectures"),
-                         sub=paste("Benchmark setup, code, data and analysis are available in the R package",
-                                   "gcbd (Eddelbuettel, 2010) via every CRAN mirror")
+                              ""),
+                         sub=ifelse(titles,paste("Benchmark setup, code, data and analysis are available in the R package",
+                                   "gcbd (Eddelbuettel, 2010) via every CRAN mirror"),
+                              "")
+                         )))
+    options(op)
+    invisible(NULL)
+}
+
+figure_Lattice <- function(titles=TRUE) {
+    D <- rbind(getBenchmarkData("i7_920"),
+               getBenchmarkData("xeon_X5570"))
+
+    require(reshape)
+    DM <- melt(D, id.vars=c("host", "type", "datum", "nobs", "nrun"))
+    DM[,"type"] <- ordered(as.character(DM[,"type"]),
+                           levels=c("matmult", "qr", "svd", "lu"))
+
+    DM[,"host"] <- ordered(DM[,"host"], levels=c("i7_920", "xeon_X5570"))
+    levels(DM[,"host"]) <- c("i7", "xeon")
+
+    sb <- trellis.par.get("strip.background")
+    sb[["col"]][1:2] <- c("gray80","gray90")
+    trellis.par.set("strip.background", sb)
+
+    sl <- trellis.par.get("superpose.line")
+    sl[["col"]] <- .cols
+    trellis.par.set("superpose.line", sl)
+
+    op <- options(scipen=5)
+    with(DM,print(xyplot(value ~ nobs| type+host,
+                         group=variable, lwd=2,
+                         ylim=c(0,30),
+                         #scales=list(x=list(log=TRUE,at=c(100,400,1500,5000),labels=c(100,400,1500,5000)),
+                         #            y=list(log=TRUE,at=c(0.0001,0.01,1,100),labels=c(0.0001,0.01,1,100))),
+                         panel=function(x,subscripts,groups,...) {
+                             panel.superpose(x,subscripts,groups,type='l',...)
+                         },
+                         key=simpleKey(text=c("ref","atlas","atl93","mkl","goto","gpu"),
+                                       space="right", lines=TRUE, points=FALSE),
+                         xlab="Matrix dimension",
+                         ylab="Elapsed time in seconds (capped at 30 seconds)",
+                         main=ifelse(titles,paste("Benchmarking BLAS and GPU: Comparing six",
+                                     "implementations on four methods across two architectures"), ""),
+                         sub=ifelse(titles,paste("Benchmark setup, code, data and analysis are available",
+                                   "in the R package gcbd (Eddelbuettel, 2010) via every CRAN mirror"), "")
+                         )))
+    options(op)
+    invisible(NULL)
+}
+
+figure_LatticeByArch <- function(titles=TRUE) {
+    D <- rbind(getBenchmarkData("i7_920"),
+               getBenchmarkData("xeon_X5570"))
+
+    require(reshape)
+    DM <- melt(D, id.vars=c("host", "type", "datum", "nobs", "nrun"))
+    DM[,"type"] <- ordered(as.character(DM[,"type"]),
+                           levels=c("matmult", "qr", "svd", "lu"))
+
+    DM[,"host"] <- ordered(DM[,"host"], levels=c("i7_920", "xeon_X5570"))
+    levels(DM[,"host"]) <- c("i7", "xeon")
+
+    sb <- trellis.par.get("strip.background")
+    sb[["col"]][1:2] <- c("gray80","gray90")
+    trellis.par.set("strip.background", sb)
+
+    sl <- trellis.par.get("superpose.line")
+    sl[["col"]] <- .cols
+    trellis.par.set("superpose.line", sl)
+
+    op <- options(scipen=5)
+    with(DM,print(xyplot(value ~ nobs | type+variable,
+                         group=host, lwd=2,
+                         ylim=c(0,30),
+                         panel=function(x,subscripts,groups,...) {
+                             panel.superpose(x,subscripts,groups,type='l',...)
+                         },
+                         xlab="Matrix dimension",
+                         ylab="Elapsed time in seconds",
+                         auto.key=TRUE,
+                         main=ifelse(titles,paste("Benchmarking BLAS and GPU:",
+                                    "Comparing six implementations on four methods across two architectures"),
+                                    ""),
+                         sub=ifelse(titles,paste("Benchmark setup, code, data and analysis are available in the R package",
+                                   "gcbd (Eddelbuettel, 2010) via every CRAN mirror"),
+                                    "")
                          )))
     options(op)
     invisible(NULL)
