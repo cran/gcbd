@@ -1,3 +1,44 @@
+2024-10-29  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Version, Date): Release 0.2.7
+
+	* DESCRIPTION (Authors@R): Added
+
+	* vignettes/gcbd.Rnw: No longer force call for package versions
+
+	* man/figures.Rd: Remove extra \code{loglogAnalysis} to address a nag
+
+2024-02-15  Dirk Eddelbuettel  <edd@debian.org>
+
+	* .github/workflows/ci.yaml (jobs): Update to actions/checkout@v4,
+	add r-ci-setup actions
+
+2022-11-05  Dirk Eddelbuettel  <edd@debian.org>
+
+	* .github/workflows/ci.yaml (jobs): Update to actions/checkout@v3
+
+2022-02-20  Dirk Eddelbuettel  <edd@debian.org>
+
+	* NAMESPACE: Add panel.superpose to lattice imports
+
+2021-11-08  Dirk Eddelbuettel  <edd@debian.org>
+
+ 	* README.md: Remove Travis badge
+	* .travis.yml: Remove Travis YAML config
+
+2021-03-26  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (URL, BugReports): Add two fields
+
+2020-12-26  Dirk Eddelbuettel  <edd@debian.org>
+
+        * .github/workflows/ci.yaml: Add CI runner using r-ci
+	* README.md: Add new CI badge
+
+2017-08-26  Dirk Eddelbuettel  <edd@debian.org>
+
+	* .travis.yml (before_install): Use https to fetch run.sh
+
 2016-09-27  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Version, Date): Release 0.2.6
